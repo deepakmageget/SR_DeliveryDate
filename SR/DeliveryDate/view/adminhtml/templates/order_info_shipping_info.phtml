@@ -1,0 +1,36 @@
+
+<?php  if(!empty($block->getDeliveryDate())){ ?>
+<div id="delivery-date">
+    <strong><?php echo __('Delivery Date') ?>: </strong>
+    <span class="price"><?=$block->getDeliveryDate() ?></span>
+</div>
+<?php  } ?>
+
+
+<?php  if(!empty($block->getDeliveryTime())){ ?>
+    <div id="delivery-time">
+    <strong><?php echo __('Delivery Time') ?>:</strong>
+    <span class="price"><?= $block->getDeliveryTime() ?></span>
+</div>
+<?php  } ?>
+
+
+
+<!-- <div id="delivery-comment">
+    <strong><?php echo __('Comment') ?>:</strong>
+    <br/>
+    <span class="price"><?=$block->getDeliveryComment() ?></span>
+</div> -->
+<script type="text/javascript">
+    require(
+        ['jquery'],
+        function($) {
+            var element = $('#delivery-date').detach();
+            $('.order-shipping-method').append(element);
+            var element = $('#delivery-comment').detach();
+            $('.order-shipping-method').append(element);
+            var element = $('#delivery-time').detach();
+            $('.order-shipping-method').append(element);
+        }
+    );
+</script>
