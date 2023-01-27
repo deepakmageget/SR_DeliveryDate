@@ -5,7 +5,7 @@ Delivery Date and Delivery Time Extension in magento2
 
 
 # Delivery Date and Delivery Time Module 
-# ![WebApp](https://i.ibb.co/DrLGqh8/Screenshot-1.png)
+# ![WebApp](https://i.ibb.co/G9FhFm7/Screenshot-3.png)
 # Extension Description 
 <table>
 <tr>
