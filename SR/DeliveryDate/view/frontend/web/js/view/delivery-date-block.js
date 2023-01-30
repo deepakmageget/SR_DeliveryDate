@@ -171,7 +171,6 @@ $(document).on('change', '#checkout-shipping-method-load input[type=radio]', fun
                         var self = this;
                         self.hasForm = ko.observable(true);
                         self.customdata = customtime;
-                        // self.customdata = customvalue;
                     }
                     ko.applyBindings(new OptionsViewModelother(),document.getElementById("delivery_time"));
 
