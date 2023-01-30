@@ -19,6 +19,7 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
 
     const XPATH_OPTIONDELIVERYTIME = 'carriers/deliverydateandtime/optiondeliverytime';
     const XPATH_START_TIME = 'carriers/deliverydateandtime/starttimne';
+    const XPATH_END_TIME = 'carriers/deliverydateandtime/endtimne';
 
 
     /**
@@ -64,6 +65,7 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
 
         $optionDeliveryTime = $this->scopeConfig->getValue(self::XPATH_OPTIONDELIVERYTIME, ScopeInterface::SCOPE_STORE, $store);
         $starttime = $this->scopeConfig->getValue(self::XPATH_START_TIME, ScopeInterface::SCOPE_STORE, $store);
+        $endtime = $this->scopeConfig->getValue(self::XPATH_END_TIME, ScopeInterface::SCOPE_STORE, $store);
         
         $deliveryTimeOptions = (explode(",", $optionDeliveryTime)); 
 
@@ -72,7 +74,7 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
             $noday = 1;
         }
 
-            $deleveryTimeArray = ['select time'];
+            $deleveryTimeArray = ['Select Time'];
 
             $getStoreTime = $this->getStoreTime(); // 164902 // 052127
            
@@ -109,12 +111,10 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
 
 
         //for other date
-        $otherdeleveryTimeArray = ['select time'];
+        $otherdeleveryTimeArray = ['Select Time'];
         foreach($deliveryTimeOptions as $optionTime){
             $otherdeleveryTimeArray[] =  $optionTime;
         }
-
-
         // for startdate 
         if(isset($starttime) && !empty($starttime)){
             $starttimnenew = "";
@@ -123,16 +123,35 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
                 $starttimnenew.=$starttimnenewvalue;
     
             }
-    
+
+            $endtimnenew = "";
+            $endtimearr = (explode(",", $endtime)); 
+            if(isset($endtime) && !empty($endtime)){
+                foreach($endtimearr as $endtimnenewvalue){
+                    $endtimnenew.=$endtimnenewvalue;
+        
+                }
+            }
+
             if($starttimnenew >= $getStoreTime){
                 $deleveryTimeArray=[];
-    
                 $starttimeinoptions =  str_replace(",",":",$starttime);
-                $deleveryTimeArray []= "Todays we are available after - ". $starttimeinoptions ;
+                $deleveryTimeArray []= "Todays we are available after - ". $starttimeinoptions;
+                // if($startDate == 'today'){
+                //     $startDate = '+1d';
+                // }
+               
+            }
+            if($endtimnenew <= $getStoreTime){
+                $deleveryTimeArray=[];
+                $starttimeinoptions =  str_replace(",",":",$endtime);
+                $deleveryTimeArray []= "todays end time - ". $starttimeinoptions;
+                if($startDate == 'today'){
+                    $startDate = '+1d';
+                }
             }
         }
       
-
         $configData['customvalue']['customdata'] = ['test1','test2','test2'];
         $config = [
             'shipping' => [

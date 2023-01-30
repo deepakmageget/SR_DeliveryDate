@@ -29,7 +29,7 @@ class ShippingInformationManagement
         $quote = $this->quoteRepository->getActive($cartId);
         $quote->setDeliveryDate($deliveryDate);
         $quote->setDeliveryComment($deliveryComment);
-        if($deliveryTime !== 'select time'){
+        if($deliveryTime !== 'Select Time'){
             $quote->setDeliveryTime($deliveryTime);
         }
        

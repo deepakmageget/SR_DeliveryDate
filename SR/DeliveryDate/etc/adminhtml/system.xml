@@ -22,10 +22,10 @@
                 <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text" canRestore="1">
                     <label>Title</label>
                 </field>
-                <field id="format" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <!-- <field id="format" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Date Format:</label>
                     <comment>yy-mm-dd</comment>
-                </field>
+                </field> -->
                 
                 <field id="startdate" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" canRestore="1" showInStore="1">
                     <label>Start Date of the Slot</label>
@@ -34,18 +34,20 @@
                 <field id="starttimne" translate="label" sortOrder="12" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Start Time of the Slot</label>
                 </field>
-                
-                <field id="enddate" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" canRestore="1" showInStore="1">
+                   <field id="endtimne" translate="label" sortOrder="13" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>End Time of the Slot</label>
+                </field>
+                <field id="enddate" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" canRestore="1" showInStore="1">
                     <label>End Date of the Slot</label>
                     <comment>today-today, tommarow:+1d, next day to strat :+1d,+2d,+3d,+4d</comment>
                 </field>
-                 <field id="optiondeliverytime" translate="label" type="multiselect" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                 <field id="optiondeliverytime" translate="label" type="multiselect" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Delivery Time Options </label>
                     <source_model>SR\DeliveryDate\Model\Adminhtml\System\Config\Source\DeliveryTime</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
 
-                <field id="cutofminute" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="cutofminute" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Cut of Time:</label>
                     <comment>in minute</comment>
                 </field>

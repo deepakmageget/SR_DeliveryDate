@@ -132,7 +132,7 @@ $(document).on('change', '#checkout-shipping-method-load input[type=radio]', fun
                 var customvalue = window.checkoutConfig.shipping.delivery_time.customvalue;
                 var customtime = window.checkoutConfig.shipping.otherdelevery_time.customtime;
                 var deepak = this._super().observe([
-                    'customdata'
+                    'customdata','hasForm'
                 ]);
 
 
@@ -151,7 +151,11 @@ $(document).on('change', '#checkout-shipping-method-load input[type=radio]', fun
 
                     var OptionsViewModel = function() {
                         var self = this;
+                        self.hasForm = ko.observable(true);
                         if(customvalue.toString().indexOf("available") !== -1){
+                            self.hasForm = ko.observable(false);
+                        }
+                        if(customvalue.toString().indexOf("end") !== -1){
                             self.hasForm = ko.observable(false);
                         }
                         self.customdata = customvalue;
@@ -176,10 +180,12 @@ $(document).on('change', '#checkout-shipping-method-load input[type=radio]', fun
                     event.preventDefault();
                 });
            
+                deepak.hasForm = ko.observable(true);
                 if(customvalue.toString().indexOf("available") !== -1){
                     deepak.hasForm = ko.observable(false);
+                }else if(customvalue.toString().indexOf("end") !== -1){
+                    deepak.hasForm = ko.observable(false);
                 }
-               
                 deepak.customdata = customvalue;
                 return this;
             }
