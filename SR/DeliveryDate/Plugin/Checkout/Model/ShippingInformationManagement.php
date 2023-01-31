@@ -29,9 +29,32 @@ class ShippingInformationManagement
         $quote = $this->quoteRepository->getActive($cartId);
         $quote->setDeliveryDate($deliveryDate);
         $quote->setDeliveryComment($deliveryComment);
-        if($deliveryTime !== 'Select Time'){
-            $quote->setDeliveryTime($deliveryTime);
-        }
-       
+
+
+        // if($deliveryTime !== 'Select Time'){
+        //     $quote->setDeliveryTime($deliveryTime);
+        // }
+
+        
+        $strposition1  =  strpos((string)$deliveryTime,'Select');
+        $strposition2  =  strpos((string)$deliveryTime,'available');
+         $strposition3  =  strpos((string)$deliveryTime,'end');
+         $a = true;
+            if($strposition1){
+             $a = false;
+             }        
+             if($strposition2){
+                 $a = false;
+             }
+             if($strposition3){
+                 $a = false;
+             }
+             
+             if($a == true){
+                $quote->setDeliveryTime($deliveryTime);
+             }
+      
+     
+
     }
 }
