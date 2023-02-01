@@ -31,10 +31,10 @@
                     <label>Start Date of the Slot</label>
                     <comment>today-today, tommarow:+1d, next day to strat :+1d,+2d,+3d,+4d</comment>
                 </field>
-                <field id="starttimne" translate="label" sortOrder="12" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="starttimne" translate="label" sortOrder="12" canRestore="1" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Start Time of the Slot</label>
                 </field>
-                   <field id="endtimne" translate="label" sortOrder="13" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
+                   <field id="endtimne" translate="label" sortOrder="13" canRestore="1" type="time" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>End Time of the Slot</label>
                 </field>
                 <field id="enddate" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" canRestore="1" showInStore="1">

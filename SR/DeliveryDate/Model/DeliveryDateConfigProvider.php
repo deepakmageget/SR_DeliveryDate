@@ -12,11 +12,9 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
     const XPATH_ACTIVE = 'carriers/deliverydateandtime/active';
     const XPATH_HOURMIN = 'carriers/deliverydateandtime/hourMin';
     const XPATH_HOURMAX = 'carriers/deliverydateandtime/hourMax';
-
     const XPATH_STARTDATE = 'carriers/deliverydateandtime/startdate';
     const XPATH_ENDDATE = 'carriers/deliverydateandtime/enddate';
     const XPATH_CUTOFMIN = 'carriers/deliverydateandtime/cutofminute';
-
     const XPATH_OPTIONDELIVERYTIME = 'carriers/deliverydateandtime/optiondeliverytime';
     const XPATH_START_TIME = 'carriers/deliverydateandtime/starttimne';
     const XPATH_END_TIME = 'carriers/deliverydateandtime/endtimne';
@@ -58,11 +56,9 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
         $hourMin = $this->scopeConfig->getValue(self::XPATH_HOURMIN, ScopeInterface::SCOPE_STORE, $store);
         $hourMax = $this->scopeConfig->getValue(self::XPATH_HOURMAX, ScopeInterface::SCOPE_STORE, $store);
         $format = $this->scopeConfig->getValue(self::XPATH_FORMAT, ScopeInterface::SCOPE_STORE, $store);
-
         $startDate = $this->scopeConfig->getValue(self::XPATH_STARTDATE, ScopeInterface::SCOPE_STORE, $store);
         $endDate = $this->scopeConfig->getValue(self::XPATH_ENDDATE, ScopeInterface::SCOPE_STORE, $store);
         $cutofmin = $this->scopeConfig->getValue(self::XPATH_CUTOFMIN, ScopeInterface::SCOPE_STORE, $store);
-
         $optionDeliveryTime = $this->scopeConfig->getValue(self::XPATH_OPTIONDELIVERYTIME, ScopeInterface::SCOPE_STORE, $store);
         $starttime = $this->scopeConfig->getValue(self::XPATH_START_TIME, ScopeInterface::SCOPE_STORE, $store);
         $endtime = $this->scopeConfig->getValue(self::XPATH_END_TIME, ScopeInterface::SCOPE_STORE, $store);
@@ -74,73 +70,61 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
             $noday = 1;
         }
 
-            $deleveryTimeArray = ['Select Time'];
-
             $getStoreTime = $this->getStoreTime(); // 164902 // 052127
            
-          
-
-          //for Current date
-
-        foreach($deliveryTimeOptions as $optionTime){
-
-            $configtime1 = $optionTime;
-            $timeCheckAmPm = (explode("-", $configtime1)); 
-
-            $timeAm = strrpos($timeCheckAmPm[0],"AM");
-            if($timeAm){
-                $time1 = (explode(":", $configtime1)); // Array ( [0] => 07 [1] => 00AM - 10 [2] => 00AM )
-                $time1 = $time1[0]; //07
-                $updateTime1 = $time1.$cutofmin.'00'; // 073000
-                if($updateTime1 >= $getStoreTime){
-                    $deleveryTimeArray[] =  $configtime1;
+            if(isset($starttime) && !empty($starttime)){
+                $starttimnenew = "";
+                $starttimearr = (explode(",", $starttime)); 
+                foreach($starttimearr as $starttimnenewvalue){
+                    $starttimnenew.=$starttimnenewvalue;
                 }
-            }
-            elseif(strrpos($timeCheckAmPm[0],"PM")){
-                $time1 = (explode(":", $configtime1)); 
-                $time1 = $time1[0]; //07
-                $time1 = (int)$time1+ (int)12; //15
-                $updateTime1 = $time1.$cutofmin.'00'; // 073000
-                if($updateTime1 >= $getStoreTime){
-                    $deleveryTimeArray[] =  $configtime1;
-                }
-            }
-
-        }
-
-
-
-        //for other date
-        $otherdeleveryTimeArray = ['Select Time'];
-        foreach($deliveryTimeOptions as $optionTime){
-            $otherdeleveryTimeArray[] =  $optionTime;
-        }
-        // for startdate 
-        if(isset($starttime) && !empty($starttime)){
-            $starttimnenew = "";
-            $starttimearr = (explode(",", $starttime)); 
-            foreach($starttimearr as $starttimnenewvalue){
-                $starttimnenew.=$starttimnenewvalue;
     
-            }
-
-            $endtimnenew = "";
-            $endtimearr = (explode(",", $endtime)); 
-            if(isset($endtime) && !empty($endtime)){
-                foreach($endtimearr as $endtimnenewvalue){
-                    $endtimnenew.=$endtimnenewvalue;
-        
+                $endtimnenew = "";
+                $endtimearr = (explode(",", $endtime)); 
+                if(isset($endtime) && !empty($endtime)){
+                    foreach($endtimearr as $endtimnenewvalue){
+                        $endtimnenew.=$endtimnenewvalue;
+                    }
                 }
-            }
+    
+               //for Current date
+               $deleveryTimeArray = ['Select Time'];
+               foreach($deliveryTimeOptions as $optionTime){
 
+                   $configtime1 = $optionTime;
+                   $timeCheckAmPm = (explode("-", $configtime1)); 
+
+                   $timeAm = strrpos($timeCheckAmPm[0],"AM");
+                   if($timeAm){
+                       $time1 = (explode(":", $configtime1)); 
+                       $time1 = $time1[0]; //07
+                       $updateTime1 = $time1.$cutofmin.'00'; 
+                       if($starttimnenew <= $updateTime1 && $endtimnenew >= $updateTime1){
+                           if($updateTime1 >= $getStoreTime){
+                               $deleveryTimeArray[] =  $configtime1;
+                           }
+                        }
+                   }
+                   elseif(strrpos($timeCheckAmPm[0],"PM")){
+                       $time1 = (explode(":", $configtime1)); 
+                       $time1 = $time1[0]; //07
+                       $time1 = (int)$time1+ (int)12; //15
+                       $updateTime1 = $time1.$cutofmin.'00'; 
+                       if($endtimnenew >= $updateTime1 && $starttimnenew <= $updateTime1){
+                           if($updateTime1 >= $getStoreTime){
+                               $deleveryTimeArray[] =  $configtime1;
+                           }
+                       }
+                   }
+               }
+
+
+            // for starttime
+       
             if($starttimnenew >= $getStoreTime){
                 $deleveryTimeArray=[];
                 $starttimeinoptions =  str_replace(",",":",$starttime);
                 $deleveryTimeArray []= "Todays we are available after - ". $starttimeinoptions;
-                // if($startDate == 'today'){
-                //     $startDate = '+1d';
-                // }
-               
             }
             if($endtimnenew <= $getStoreTime){
                 $deleveryTimeArray=[];
@@ -152,6 +136,36 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
             }
         }
       
+        // for other date 
+        $otherdeleveryTimeArray = ['Select Time'];
+        foreach($deliveryTimeOptions as $optionTime){
+
+            $configtime1 = $optionTime;
+            $timeCheckAmPm = (explode("-", $configtime1)); 
+
+            $timeAm = strrpos($timeCheckAmPm[0],"AM");
+            if($timeAm){
+                $time1 = (explode(":", $configtime1)); 
+                $time1 = $time1[0]; //07
+                $updateTime1 = $time1.$cutofmin.'00'; 
+                if($starttimnenew <= $updateTime1 && $endtimnenew >= $updateTime1){
+                        $otherdeleveryTimeArray[] =  $configtime1;
+                }
+            }
+            elseif(strrpos($timeCheckAmPm[0],"PM")){
+                $time1 = (explode(":", $configtime1)); 
+                $time1 = $time1[0]; //07
+                $time1 = (int)$time1+ (int)12; //15
+                $updateTime1 = $time1.$cutofmin.'00'; 
+                if($endtimnenew >= $updateTime1 && $starttimnenew <= $updateTime1){
+                        $otherdeleveryTimeArray[] =  $configtime1;
+                    }
+                }
+        }
+
+
+        // provide data on config js
+            
         $configData['customvalue']['customdata'] = ['test1','test2','test2'];
         $config = [
             'shipping' => [
@@ -169,7 +183,6 @@ class DeliveryDateConfigProvider implements ConfigProviderInterface
                 ],
                 'delivery_time' => [
                     'customvalue'=>$deleveryTimeArray,
-                    
                 ],
                 'otherdelevery_time'=>[
                     'customtime'=>$otherdeleveryTimeArray,
